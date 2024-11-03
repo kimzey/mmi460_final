@@ -68,8 +68,6 @@ function GameTest1({ images }) {
       setSelectedIndex(null);
     } else {
       // Show final score when game is complete
-      setScore(5);
-      console.log(score);
       
       Swal.fire({
         title: 'เกมจบแล้ว!',
@@ -89,7 +87,17 @@ function GameTest1({ images }) {
 
   const CheckCurent = () => {
     const isCorrect = selectedIndex === indexChage;
-    
+  
+    // Check if no image was selected
+    if (selectedIndex === null) {
+      Swal.fire({
+        title: 'Error!',
+        text: 'ลืมกรอกนะ',
+        icon: 'error',
+      });
+      return; // Stop further execution
+    }
+  
     if (isCorrect) {
       setScore(prev => prev + 1);
       Swal.fire({
@@ -98,7 +106,6 @@ function GameTest1({ images }) {
         icon: 'success',
         confirmButtonText: 'รอบต่อไป'
       }).then(() => {
-        
         startNextRound();
       });
     } else {
@@ -112,7 +119,7 @@ function GameTest1({ images }) {
       });
     }
   };
-
+  
   return (
     <div className="content">
       <h1 className="topic">Image Memory Test</h1>
@@ -168,7 +175,7 @@ function GameTest1({ images }) {
 
 // Define prop types for the component
 GameTest1.propTypes = {
-  images: PropTypes.arrayOf(PropTypes.string),
+  images: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default GameTest1;
