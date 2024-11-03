@@ -1,0 +1,31 @@
+/* NavBar.css */
+.navbar {
+    background-color: #333; /* สีพื้นหลัง */
+    padding: 15px; /* ระยะห่างภายใน */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* เงาเล็กน้อย */
+}
+
+.navbar ul {
+    list-style-type: none; /* ไม่มีจุด */
+    margin: 0; /* ไม่มีระยะขอบ */
+    padding: 0; /* ไม่มีระยะห่าง */
+    display: flex; /* จัดแนวลิงก์เป็นแถว */
+    justify-content: center; /* จัดแนวกลาง */
+}
+
+.navbar li {
+    margin: 0 15px; /* ระยะห่างระหว่างลิงก์ */
+}
+
+.navbar a {
+    color: white; /* สีตัวอักษร */
+    text-decoration: none; /* ไม่มีขีดเส้นใต้ */
+    font-size: 16px; /* ขนาดตัวอักษร */
+    padding: 10px 15px; /* ระยะห่างภายใน */
+    transition: transform 0.2s ease; /* เอฟเฟกต์การเปลี่ยนแปลง */
+}
+
+.navbar a:hover {
+    filter: drop-shadow(0 0 1rem #4f6aff);
+    color: #4f6aff;
+}

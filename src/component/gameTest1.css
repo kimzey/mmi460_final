@@ -28,7 +28,9 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
     transition: transform 0.3s ease, width 0.3s ease;
 }
-
+.grid_img:active{
+    scale: 0.9;
+}
 .grid_img img.selected {
     outline: 5px solid rgba(21, 255, 0, 0.836); /* ขอบภายใน */
     border-radius: 1rem;
@@ -58,6 +60,7 @@ img{
     background-color: white;
     color: rgb(0, 0, 0);
     font-size: 1rem;
+    cursor: pointer;
 }
 
 .btn_continue:hover{
