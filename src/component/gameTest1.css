@@ -2,7 +2,7 @@
     display: grid;
     grid-template-columns: auto auto auto;
     border: 2px solid;
-    width: 30vw;
+    width: 100%;
     gap: 1rem;
     border-radius: 1rem;
     padding: 1rem;
@@ -21,7 +21,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
 
-    width: 40vw;
+    width: 50%;
     height: auto;
     
     z-index: 1000;

@@ -1,0 +1,86 @@
+/* styles.css */
+
+/* ตั้งค่าพื้นฐาน */
+.container {
+    max-width: 1024px;
+    margin: 0 auto;
+    padding: 24px;
+  }
+  
+  .heading {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 24px;
+  }
+  
+  .text-lg {
+    font-size: 18px;
+    text-align: center;
+    margin-bottom: 16px;
+  }
+  
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    background-color: rgb(255, 255, 255);
+    padding: 1rem;
+    border-radius: 1rem;
+    width: 80%;
+    margin: auto;
+  }
+  
+  .grid-md {
+    grid-template-columns: repeat(2, 1fr);
+    /* background-color: black; */
+
+  }
+  
+  .button {
+    padding: 12px 24px;
+    font-weight: bold;
+    border-radius: 8px;
+    color: white;
+    text-align: center;
+    cursor: pointer;
+  }
+  
+  .bg-blue {
+    background-color: #007BFF;
+  }
+  
+  .bg-blue:hover {
+    background-color: #0056b3;
+  }
+  
+  .bg-green {
+    background-color: #28a745;
+  }
+  
+  .bg-green:hover {
+    background-color: #218838;
+  }
+  
+  .bg-gray {
+    background-color: #6c757d;
+  }
+  
+  .bg-gray:hover {
+    background-color: #5a6268;
+  }
+  
+  .text-white {
+    color: rgb(255, 255, 255);
+  }
+  
+  .card {
+    padding: 16px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 18px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+  }
+  
