@@ -1,8 +1,12 @@
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // ใช้ useNavigate สำหรับการเปลี่ยนหน้า
 import styles from './formGame1.module.css';
+import { UserGameContext } from '../dataUser';
+import Swal from 'sweetalert2';
 
 const SurveyForm = () => {
+  const { userData, updateGameData } = useContext(UserGameContext);
+
   const navigate = useNavigate(); // ประกาศ navigate
   const [formData, setFormData] = useState({
     difficulty: '',
@@ -14,18 +18,40 @@ const SurveyForm = () => {
     otherDetails: '',
   });
 
+  useEffect(() => {
+    // เมื่อ formData เปลี่ยนแปลง ให้เรียก updateGameData
+    if (Object.keys(formData).length > 0) {
+      updateGameData("formGame2", formData);
+      console.log(userData); // ตรวจสอบข้อมูลที่ส่งไป
+    }
+  }, [formData, updateGameData, userData]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
       [name]: value,
     });
+    updateGameData("formGame2",formData)
+    console.log(userData);
+    
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Submitted Data:', formData);
-    navigate('/'); // เปลี่ยนเส้นทางไปหน้า Home
+    Swal.fire({
+      title: 'ยืนยันการส่งคำตอบ?',
+      text: "คุณต้องการส่งคำตอบนี้หรือไม่?",
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'ใช่, ส่งคำตอบ',
+      cancelButtonText: 'ยกเลิก',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        console.log("Submitted Data:", formData);
+        navigate("/"); // กลับไปหน้า Home หลังจากกดส่งคำตอบ
+      }
+    });
   };
 
   return (

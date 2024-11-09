@@ -1,15 +1,66 @@
-import { useState, useEffect, useMemo } from "react";
-import Swal from 'sweetalert2';
+import { useState, useEffect, useMemo, useContext } from "react";
+import Swal from "sweetalert2";
 import "./gameTest1.css";
+import { UserGameContext } from "../dataUser";
 
 function GameTest1() {
-  const images = useMemo(() => [
-    "image_1.jpg", "image_2.jpg", "image_3.jpg", "image_4.jpg", "image_5.jpg", "image_6.jpg", "image_7.jpg", "image_8.jpg", "image_9.jpg", "image_10.jpg",
-    "image_11.jpg", "image_12.jpg", "image_13.jpg", "image_14.jpg", "image_15.jpg", "image_16.jpg", "image_17.jpg", "image_18.jpg", "image_19.jpg", "image_20.jpg",
-    "image_21.jpg", "image_22.jpg", "image_23.jpg", "image_24.jpg", "image_25.jpg", "image_26.jpg", "image_27.jpg", "image_28.jpg", "image_29.jpg", "image_30.jpg",
-    "image_31.jpg", "image_32.jpg", "image_33.jpg", "image_34.jpg", "image_35.jpg", "image_36.jpg", "image_37.jpg", "image_38.jpg", "image_39.jpg", "image_40.jpg",
-    "image_41.jpg", "image_42.jpg", "image_43.jpg", "image_44.jpg", "image_45.jpg", "image_46.jpg", "image_47.jpg", "image_48.jpg", "image_49.jpg", "image_50.jpg",
-  ], []);
+  const { userData, updateGameData } = useContext(UserGameContext);
+
+  const images = useMemo(
+    () => [
+      "image_1.jpg",
+      "image_2.jpg",
+      "image_3.jpg",
+      "image_4.jpg",
+      "image_5.jpg",
+      "image_6.jpg",
+      "image_7.jpg",
+      "image_8.jpg",
+      "image_9.jpg",
+      "image_10.jpg",
+      "image_11.jpg",
+      "image_12.jpg",
+      "image_13.jpg",
+      "image_14.jpg",
+      "image_15.jpg",
+      "image_16.jpg",
+      "image_17.jpg",
+      "image_18.jpg",
+      "image_19.jpg",
+      "image_20.jpg",
+      "image_21.jpg",
+      "image_22.jpg",
+      "image_23.jpg",
+      "image_24.jpg",
+      "image_25.jpg",
+      "image_26.jpg",
+      "image_27.jpg",
+      "image_28.jpg",
+      "image_29.jpg",
+      "image_30.jpg",
+      "image_31.jpg",
+      "image_32.jpg",
+      "image_33.jpg",
+      "image_34.jpg",
+      "image_35.jpg",
+      "image_36.jpg",
+      "image_37.jpg",
+      "image_38.jpg",
+      "image_39.jpg",
+      "image_40.jpg",
+      "image_41.jpg",
+      "image_42.jpg",
+      "image_43.jpg",
+      "image_44.jpg",
+      "image_45.jpg",
+      "image_46.jpg",
+      "image_47.jpg",
+      "image_48.jpg",
+      "image_49.jpg",
+      "image_50.jpg",
+    ],
+    []
+  );
 
   const [currentRound, setCurrentRound] = useState(1);
   const [see_img, set_See_img] = useState([]);
@@ -21,9 +72,9 @@ function GameTest1() {
   const [score, setScore] = useState(0);
   const [roundStartTime, setRoundStartTime] = useState(null);
   const [roundTimes, setRoundTimes] = useState([]);
-  
+
   // เพิ่ม state สำหรับเก็บข้อมูลการทดลอง
-  const [, setExportData] = useState([]);
+  const [ExportData, setExportData] = useState([]);
 
   // Initialize images for current round
   useEffect(() => {
@@ -80,7 +131,7 @@ function GameTest1() {
 
   const startNextRound = () => {
     if (currentRound < 5) {
-      setCurrentRound(prev => prev + 1);
+      setCurrentRound((prev) => prev + 1);
       setShowFirstImages(true);
       setTimer(30);
       setSelectedIndex(null);
@@ -89,56 +140,59 @@ function GameTest1() {
 
   const CheckCurent = () => {
     const isCorrect = selectedIndex === indexChage;
-    
+
     // ถ้ายังไม่เลือกภาพ
     if (selectedIndex === null) {
       Swal.fire({
-        title: 'Error!',
-        text: 'ลืมกรอกนะ',
-        icon: 'error',
+        title: "Error!",
+        text: "ลืมกรอกนะ",
+        icon: "error",
       });
       return;
     }
-    
+
     // เก็บเวลาที่ใช้ในรอบนี้
     const timeSpent = Date.now() - roundStartTime;
-    setRoundTimes(prev => [...prev, timeSpent]);
+    setRoundTimes((prev) => [...prev, timeSpent]);
 
     // เพิ่มข้อมูลการทดลองที่ exportData
-    setExportData(prev => [
+    setExportData((prev) => [
       ...prev,
       {
         round: currentRound,
         selectedImage: see_img[selectedIndex],
         correctImage: see_img[indexChage],
         timeSpent: (timeSpent / 1000).toFixed(2), // เวลาที่ใช้ (วินาที)
-        result: isCorrect ? 'ถูกต้อง' : 'ผิด',
-      }
+        result: isCorrect ? "ถูกต้อง" : "ผิด",
+      },
     ]);
 
     // เพิ่มคะแนน
     if (isCorrect) {
-      setScore(prev => prev + 1);
+      setScore((prev) => prev + 1);
     }
 
     // รอให้ roundTimes อัพเดทเสร็จก่อนแสดงผล
     setTimeout(() => {
       if (currentRound === 5) {
         const finalScore = isCorrect ? score + 1 : score;
-        const roundTimesFormatted = [...roundTimes, timeSpent].map((time, index) => 
-          `รอบที่ ${index + 1}: ${(time / 1000).toFixed(2)} วินาที`
-        ).join('\n');
-        
+        const roundTimesFormatted = [...roundTimes, timeSpent]
+          .map(
+            (time, index) =>
+              `รอบที่ ${index + 1}: ${(time / 1000).toFixed(2)} วินาที`
+          )
+          .join("\n");
+
         Swal.fire({
-          title: 'เกมจบแล้ว!',
+          title: "เกมจบแล้ว!",
           html: `
             คะแนนของคุณ: ${finalScore} จาก 5 รอบ
             <br><br>
             เวลาที่ใช้ในแต่ละรอบ:<br>
             <pre>${roundTimesFormatted}</pre>
           `,
-          icon: 'info',
-          confirmButtonText: 'เริ่มใหม่',
+          icon: "info",
+          confirmButtonText: "เริ่มใหม่",
         }).then(() => {
           // รีเซ็ตเกม
           setCurrentRound(1);
@@ -148,17 +202,20 @@ function GameTest1() {
           setSelectedIndex(null);
           setRoundTimes([]);
           setExportData([]); // รีเซ็ต exportData
+          updateGameData("game1",ExportData)
+          console.log(userData);
+          
         });
       } else {
         // แสดงผลรอบปกติ
         Swal.fire({
-          title: isCorrect ? 'Success!' : 'Error!',
+          title: isCorrect ? "Success!" : "Error!",
           html: `
-            ${isCorrect ? 'ถูกต้องแล้ว' : 'ผิดนะครับ'}<br>
+            ${isCorrect ? "ถูกต้องแล้ว" : "ผิดนะครับ"}<br>
             เวลาที่ใช้: ${(timeSpent / 1000).toFixed(2)} วินาที
           `,
-          icon: isCorrect ? 'success' : 'error',
-          confirmButtonText: 'รอบต่อไป'
+          icon: isCorrect ? "success" : "error",
+          confirmButtonText: "รอบต่อไป",
         }).then(() => {
           startNextRound();
         });
@@ -199,14 +256,17 @@ function GameTest1() {
           <h1 className="timer">เลือกภาพที่เหมือนกับภาพที่แสดง</h1>
           <div className="table_img">
             {see_img.map((img, index) => (
-              <div key={index} className="grid_img" onClick={() => handleImageClick(index)}>
-  <img
-    src={`/images/${img}`}
-    alt={`Image ${index + 1}`}
-    className={selectedIndex === index ? 'selected' : ''}
-  />
-</div>
-
+              <div
+                key={index}
+                className="grid_img"
+                onClick={() => handleImageClick(index)}
+              >
+                <img
+                  src={`/images/${img}`}
+                  alt={`Image ${index + 1}`}
+                  className={selectedIndex === index ? "selected" : ""}
+                />
+              </div>
             ))}
           </div>
           <button className="btn_continue" onClick={CheckCurent}>

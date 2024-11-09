@@ -5,7 +5,154 @@
     font-size: 2rem;
     filter: drop-shadow(0 0 1rem #4f6aff);
 }
-
+.userText {
+    margin: 1rem;
+    padding: 1rem;
+    color: rgb(255, 255, 255);.topic {
+        padding: 1rem;
+        margin: 1rem;
+        text-align: center;
+        font-size: 2rem;
+        filter: drop-shadow(0 0 1rem #4f6aff);
+    }
+    
+    .userText {
+        margin: 1rem;
+        padding: 1rem;
+        color: rgb(255, 255, 255);
+        border-radius: 1rem;
+    }
+    
+    .form_user {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 2rem auto;
+        width: 90%;
+        max-width: 400px;
+    }
+    
+    .form_user input {
+        padding: 1rem;
+        margin: 0.5rem 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        width: 100%;
+        font-size: 1rem;
+        transition: border-color 0.3s;
+    }
+    
+    .form_user input:focus {
+        border-color: #4f6aff;
+        outline: none;
+    }
+    
+    .form_user button {
+        padding: 1rem;
+        margin-top: 1rem;
+        border: none;
+        border-radius: 5px;
+        background-color: #4f6aff;
+        color: white;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    
+    .form_user button:hover {
+        background-color: #365bc0;
+    }
+    
+    .All_game {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        width: 100%;
+        flex-wrap: wrap; /* Ensure that items wrap in smaller screens */
+    }
+    
+    .card_game {
+        margin: 1rem;
+        padding: 1rem;
+        border-radius: 1rem;
+        font-size: 24px;
+        background-color: white;
+        color: black;
+        text-decoration: none;
+        transition: transform 0.3s;
+        width: 100%;
+        max-width: 250px; /* Limit the max width of cards */
+        text-align: center;
+    }
+    
+    .card_game:hover {
+        filter: drop-shadow(0 0 1rem #4f6aff);
+        transform: scale(1.05);
+    }
+    
+    @media (max-width: 768px) {
+        .topic {
+            font-size: 1.5rem; /* Smaller font size for smaller screens */
+        }
+    
+        .form_user {
+            margin: 1rem auto;
+            width: 85%;
+        }
+    
+        .form_user input {
+            font-size: 0.9rem;
+        }
+    
+        .form_user button {
+            font-size: 0.9rem;
+        }
+    
+        .All_game {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+    
+        .card_game {
+            max-width: 100%;
+            font-size: 20px; /* Adjust card text size */
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .topic {
+            font-size: 1.2rem; /* Even smaller for very small screens */
+        }
+    
+        .form_user {
+            margin: 1rem auto;
+            width: 90%;
+        }
+    
+        .form_user input {
+            font-size: 0.8rem;
+            padding: 0.8rem; /* Smaller padding */
+        }
+    
+        .form_user button {
+            font-size: 0.8rem;
+            padding: 0.8rem;
+        }
+    
+        .All_game {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+    
+        .card_game {
+            max-width: 100%;
+            font-size: 18px; /* Adjust card text size further */
+        }
+    }
+    
+    border-radius: 1rem;
+    
+}
 .form_user {
     display: flex;
     flex-direction: column;
@@ -51,6 +198,7 @@
     justify-content: space-evenly;
     align-items: center;
     width: 100%;
+    flex-wrap: wrap;
 }
 
 .card_game {

@@ -10,10 +10,16 @@ const NavBar = () => {
                     <Link to="/">Home</Link>
                 </li>
                 <li>
-                    <Link to="/game1">Game 1 </Link>
+                    <Link to="/game1">Game1 </Link>
                 </li>
                 <li>
-                    <Link to="/game2">Game 2 </Link>
+                    <Link to="/game2">Game2 </Link>
+                </li>
+                <li>
+                    <Link to="/game2">form2 </Link>
+                </li>
+                <li>
+                    <Link to="/game2">form2 </Link>
                 </li>
                 {/* เพิ่มลิงก์สำหรับหน้าที่คุณต้องการ */}
             </ul>

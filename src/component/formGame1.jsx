@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import styles from "./formGame1.module.css";
 import { useNavigate } from "react-router-dom"; // import useNavigate
+import { UserGameContext } from '../dataUser';
+import Swal from 'sweetalert2'; // import SweetAlert2
 
 const SurveyForm = () => {
   const navigate = useNavigate(); // เรียกใช้ useNavigate
+  const { userData, updateGameData } = useContext(UserGameContext);
 
   const [formData, setFormData] = useState({
     difficulty: "",
@@ -22,12 +25,34 @@ const SurveyForm = () => {
       ...formData,
       [name]: value,
     });
+    updateGameData("formGame1", formData);
+    console.log(userData);
   };
+
+  useEffect(() => {
+    if (Object.keys(formData).length > 0) {
+      updateGameData("formGame1", formData);
+      console.log(userData); // ตรวจสอบข้อมูลที่ส่งไป
+    }
+  }, [formData, updateGameData, userData]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Submitted Data:", formData);
-    navigate("/"); // กลับไปหน้า Home หลังจากกดส่งคำตอบ
+    
+    // Show SweetAlert2 confirmation before submitting
+    Swal.fire({
+      title: 'ยืนยันการส่งคำตอบ?',
+      text: "คุณต้องการส่งคำตอบนี้หรือไม่?",
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'ใช่, ส่งคำตอบ',
+      cancelButtonText: 'ยกเลิก',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        console.log("Submitted Data:", formData);
+        navigate("/"); // กลับไปหน้า Home หลังจากกดส่งคำตอบ
+      }
+    });
   };
 
   return (
@@ -82,8 +107,7 @@ const SurveyForm = () => {
       </label>
 
       <label className={styles.label}>
-        คุณรู้สึกว่า “การจดจำองค์ประกอบหรือรูปทรง” มีบทบาทสำคัญแค่ไหน? (ระดับ 1
-        - 5)
+        คุณรู้สึกว่า “การจดจำองค์ประกอบหรือรูปทรง” มีบทบาทสำคัญแค่ไหน? (ระดับ 1 - 5)
         <select
           name="shapeImportance"
           value={formData.shapeImportance}
@@ -135,8 +159,7 @@ const SurveyForm = () => {
       </label>
 
       <label className={styles.label}>
-        คุณพบว่า “การแยกแยะองค์ประกอบหรือรูปทรง”
-        ภายในภาพทำให้การจดจำภาพง่ายขึ้นหรือไม่? (ใช่ หรือ ไม่)
+        คุณพบว่า “การแยกแยะองค์ประกอบหรือรูปทรง” ภายในภาพทำให้การจดจำภาพง่ายขึ้นหรือไม่? (ใช่ หรือ ไม่)
         <select
           name="shapeDistinction"
           value={formData.shapeDistinction}

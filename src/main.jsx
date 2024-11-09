@@ -5,6 +5,7 @@ import GameTest1 from './component/gameTest1';
 import GameTest2 from './component/gameTest2';
 import FormGame1 from "./component/formGame1"
 import FormGame2 from "./component/formGame2"
+import ExportData  from "./component/exportData"
 
 import NavBar from './component/navbar'; // นำเข้า NavBar
 import { UserGameProvider } from './dataUser'; // นำเข้า UserGameProvider
@@ -21,6 +22,9 @@ root.render(
         <Route path="/game2" element={<GameTest2 />} />
         <Route path="/form1" element={<FormGame1 />} />
         <Route path="/form2" element={<FormGame2 />} />
+        <Route path="/exportdata" element={<ExportData />} />
+
+
       </Routes>
     </Router>
   </UserGameProvider>

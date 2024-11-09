@@ -8,13 +8,14 @@ const UserGameProvider = ({ children }) => {
   const [userData, setUserData] = useState({
     userName: '',
     userId: '',
-    game1: {
-      round: 0,
-      score: 0,
-      incorrectSelections: 0,
-      timeTaken: 0,
-      totalPossibleScore: 0,
-    },
+    game1: [],
+    // {
+    //   round: 0,
+    //   score: 0,
+    //   incorrectSelections: 0,
+    //   timeTaken: 0,
+    //   totalPossibleScore: 0,
+    // },
     game2: [],
     formGame1:[],
     formGame2:[],
