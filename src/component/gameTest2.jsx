@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Swal from "sweetalert2"; // Import SweetAlert2
 import './gameTest2.css';
 
 const allColors = [
@@ -25,6 +26,7 @@ const MemoryTestGame = () => {
   const [gameComplete, setGameComplete] = useState(false);
   const [displayColors, setDisplayColors] = useState([]);
   const [answerOptions, setAnswerOptions] = useState([]);
+  
   const [timeRemaining, setTimeRemaining] = useState(5);
   const [roundStartTime, setRoundStartTime] = useState(null);
   const [roundResults, setRoundResults] = useState([]);
@@ -73,11 +75,6 @@ const MemoryTestGame = () => {
     return () => clearInterval(timer);
   }, [showTest, timeRemaining]);
 
-  // const handleStart = () => {
-  //   setShowTest(false);
-  //   setRoundStartTime(Date.now());
-  // };
-
   const handleColorSelect = (color) => {
     if (selectedAnswers.includes(color.text)) {
       setSelectedAnswers(selectedAnswers.filter(item => item !== color.text));
@@ -105,29 +102,42 @@ const MemoryTestGame = () => {
     setRoundResults([...roundResults, roundResult]);
     
     if (currentRound < 5) {
-      alert(`รอบที่ ${currentRound}:\nตอบถูก ${score} สี จากทั้งหมด ${displayColors.length} สี\nเลือกสีที่ไม่มี ${incorrectSelections} สี\nใช้เวลา ${timeTaken.toFixed(2)} วินาที`);
-      setCurrentRound(currentRound + 1);
-      setSelectedAnswers([]);
-      setShowTest(true);
-      setGameComplete(false);
+      // Replace alert with SweetAlert2
+      Swal.fire({
+        title: `รอบที่ ${currentRound}`,
+        html: `ตอบถูก ${score} สี จากทั้งหมด ${displayColors.length} สี<br>เลือกสีที่ไม่มี ${incorrectSelections} สี<br>ใช้เวลา ${timeTaken.toFixed(2)} วินาที`,
+        icon: 'info',
+        confirmButtonText: 'ไปยังรอบถัดไป'
+      }).then(() => {
+        setCurrentRound(currentRound + 1);
+        setSelectedAnswers([]);
+        setShowTest(true);
+        setGameComplete(false);
+      });
     } else {
       const finalResults = [...roundResults, roundResult];
       const totalCorrect = finalResults.reduce((sum, r) => sum + r.score, 0);
       const totalIncorrect = finalResults.reduce((sum, r) => sum + r.incorrectSelections, 0);
       const totalTime = finalResults.reduce((sum, r) => sum + r.timeTaken, 0);
-      
-      alert(
-        `จบการทดสอบ!\n\n` +
-        `คะแนนรวม: ${totalCorrect} จาก ${finalResults.length * 6}\n` +
-        `เลือกสีที่ไม่มีรวม: ${totalIncorrect}\n` +
-        `เวลาเฉลี่ยต่อรอบ: ${(totalTime / 5).toFixed(2)} วินาที\n\n` +
-        `ผลแต่ละรอบ:\n` +
-        finalResults.map(r => 
-          `รอบ ${r.round}: ถูก ${r.score}/${r.totalPossibleScore}, ` +
-          `ผิด ${r.incorrectSelections}, เวลา ${r.timeTaken.toFixed(2)} วินาที`
-        ).join('\n')
-      );
-      setGameComplete(true);
+
+      // Show final results using SweetAlert2
+      Swal.fire({
+        title: 'จบการทดสอบ!',
+        html: `
+          คะแนนรวม: ${totalCorrect} จาก ${finalResults.length * 6}<br>
+          เลือกสีที่ไม่มีรวม: ${totalIncorrect}<br>
+          เวลาเฉลี่ยต่อรอบ: ${(totalTime / 5).toFixed(2)} วินาที<br><br>
+          ผลแต่ละรอบ:<br>
+          ${finalResults.map(r => 
+            `รอบ ${r.round}: ถูก ${r.score}/${r.totalPossibleScore}, ` +
+            `ผิด ${r.incorrectSelections}, เวลา ${r.timeTaken.toFixed(2)} วินาที`
+          ).join('<br>')}
+        `,
+        icon: 'success',
+        confirmButtonText: 'เริ่มใหม่'
+      }).then(() => {
+        setGameComplete(true);
+      });
     }
   };
 
@@ -191,7 +201,7 @@ const MemoryTestGame = () => {
                 {currentRound < 5 ? 'ไปรอบถัดไป' : 'ดูผลการทดสอบ'}
               </button>
             ) : (
-              <button 
+              <button   
                 onClick={handleReset}
                 className="button bg-blue"
               >
