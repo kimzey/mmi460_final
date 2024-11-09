@@ -2,8 +2,11 @@ import { useState, useEffect, useMemo, useContext } from "react";
 import Swal from "sweetalert2";
 import "./gameTest1.css";
 import { UserGameContext } from "../dataUser";
+import { useNavigate } from "react-router-dom";
 
 function GameTest1() {
+  const navigate = useNavigate(); // เรียกใช้ useNavigate
+
   const { userData, updateGameData } = useContext(UserGameContext);
 
   const images = useMemo(
@@ -204,6 +207,7 @@ function GameTest1() {
           setExportData([]); // รีเซ็ต exportData
           updateGameData("game1",ExportData)
           console.log(userData);
+          navigate("../form1")
           
         });
       } else {

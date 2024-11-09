@@ -85,12 +85,12 @@ function GameHome() {
         <Link to="/game2" className="card_game">
           ColorAndText Memory Test
         </Link>
-        <Link to="/form1" className="card_game">
+        {/* <Link to="/form1" className="card_game">
           form Image Memory Test
         </Link>
         <Link to="/form2" className="card_game">
           form ColorAndText Memory Test
-        </Link>
+        </Link> */}
         <Link to="/exportdata" className="card_game">
           ExportData
         </Link>

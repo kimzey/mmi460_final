@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import Swal from "sweetalert2"; // Import SweetAlert2
 import './gameTest2.css';
 import { UserGameContext } from '../dataUser';
+import { useNavigate } from "react-router-dom";
 
 const allColors = [
   { text: "สีฟ้า", color: "#00A1E4" },
@@ -21,6 +22,7 @@ const shuffleArray = (array) => {
 };
 
 const MemoryTestGame = () => {
+  const navigate = useNavigate(); // เรียกใช้ useNavigate
 
   const { userData, updateGameData } = useContext(UserGameContext);
 
@@ -143,7 +145,7 @@ const MemoryTestGame = () => {
         setGameComplete(true);
         updateGameData("game2",finalResults)
         console.log(userData);
-        
+        navigate("../form2")
       });
     }
   };
