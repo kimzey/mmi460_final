@@ -1,6 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Swal from "sweetalert2"; // Import SweetAlert2
 import './gameTest2.css';
+import { UserGameContext } from '../dataUser';
 
 const allColors = [
   { text: "สีฟ้า", color: "#00A1E4" },
@@ -20,13 +21,16 @@ const shuffleArray = (array) => {
 };
 
 const MemoryTestGame = () => {
+
+  const { userData, updateGameData } = useContext(UserGameContext);
+
   const [currentRound, setCurrentRound] = useState(1);
   const [showTest, setShowTest] = useState(true);
   const [selectedAnswers, setSelectedAnswers] = useState([]);
   const [gameComplete, setGameComplete] = useState(false);
   const [displayColors, setDisplayColors] = useState([]);
   const [answerOptions, setAnswerOptions] = useState([]);
-  
+
   const [timeRemaining, setTimeRemaining] = useState(5);
   const [roundStartTime, setRoundStartTime] = useState(null);
   const [roundResults, setRoundResults] = useState([]);
@@ -137,6 +141,9 @@ const MemoryTestGame = () => {
         confirmButtonText: 'เริ่มใหม่'
       }).then(() => {
         setGameComplete(true);
+        updateGameData("game2",finalResults)
+        console.log(userData);
+        
       });
     }
   };

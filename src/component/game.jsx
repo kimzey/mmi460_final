@@ -1,10 +1,15 @@
 import { Link } from "react-router-dom";
 import "./gameHome.css";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Swal from 'sweetalert2';
+import { UserGameContext } from '../dataUser';
 
 function GameHome() {
     // ใช้ useState เพื่อเก็บข้อมูลผู้ใช้
+
+    const { updateUserInfo } = useContext(UserGameContext);
+
+
     const [userName, setUserName] = useState("");
     const [userId, setUserId] = useState("");
 
@@ -31,6 +36,7 @@ function GameHome() {
                     'ข้อมูลของคุณถูกบันทึกเรียบร้อยแล้ว.',
                     'success'
                 );
+                updateUserInfo(userName,userId)
                 // คุณสามารถเคลียร์ฟอร์มหลังจากยืนยันได้ที่นี่
                 setUserName("");
                 setUserId("");
@@ -65,6 +71,9 @@ function GameHome() {
                 <div className="All_game">
                     <Link to="/game1" className="card_game">Image Memory Test</Link>
                     <Link to="/game2" className="card_game">Game2</Link>
+                    <Link to="/form1" className="card_game">form1</Link>
+                    <Link to="/form2" className="card_game">form2</Link>
+
                 </div>
             </div>
         </>
