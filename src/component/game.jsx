@@ -5,18 +5,20 @@ import Swal from "sweetalert2";
 import { UserGameContext } from "../dataUser";
 
 function GameHome() {
-  const { userData, updateUserInfo } = useContext(UserGameContext); // Access userData and updateUserInfo
+  const { userData, updateUserInfo } = useContext(UserGameContext);
 
-  const [userName, setUserName] = useState("");
+  // const [userName, setUserName] = useState("");
   const [userId, setUserId] = useState("");
+  const [age, setAge] = useState("");
+  const [gender, setGender] = useState("");
 
   const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent the form from refreshing the page
+    e.preventDefault();
 
     // Show SweetAlert to confirm the user's input
     Swal.fire({
       title: "ยืนยันข้อมูล",
-      text: `ชื่อผู้ใช้: ${userName}\nเลขที่: ${userId}`,
+      text: `\nเลขที่: ${userId}\nอายุ: ${age}\nเพศ: ${gender}`,
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#4f6aff",
@@ -25,17 +27,16 @@ function GameHome() {
       cancelButtonText: "ยกเลิก",
     }).then((result) => {
       if (result.isConfirmed) {
-        // Log the user info to the console (or handle as needed)
-        console.log("User Name:", userName);
-        console.log("User ID:", userId);
         Swal.fire(
           "บันทึกข้อมูลสำเร็จ!",
           "ข้อมูลของคุณถูกบันทึกเรียบร้อยแล้ว.",
           "success"
         );
-        updateUserInfo(userName, userId);
-        setUserName(""); // Clear the input fields
+        updateUserInfo(userId, gender, age);
+        // setUserName("");
         setUserId("");
+        setAge("");
+        setGender("");
       }
     });
   };
@@ -46,11 +47,17 @@ function GameHome() {
       <div className="user-info">
         {userData ? (
           <div className="userText">
-            <h1>
-              <strong>ชื่อผู้ใช้ :</strong> {userData.userName}
-            </h1>
+            {/* <h1>
+              <strong>ชื่อผู้ใช้ :</strong> {userName}
+            </h1> */}
             <h1>
               <strong>เลขที่ :</strong> {userData.userId}
+            </h1>
+            <h1>
+              <strong>อายุ :</strong> {userData.age}
+            </h1>
+            <h1>
+              <strong>เพศ :</strong> {userData.gender}
             </h1>
           </div>
         ) : (
@@ -59,18 +66,32 @@ function GameHome() {
       </div>
       {/* Form to enter user data */}
       <form onSubmit={handleSubmit} className="form_user">
-        <input
+        {/* <input
           type="text"
           placeholder="กรุณากรอกชื่อผู้ใช้"
           value={userName}
           onChange={(e) => setUserName(e.target.value)}
           required
-        />
+        /> */}
         <input
           type="text"
           placeholder="กรุณากรอกเลขที่"
           value={userId}
           onChange={(e) => setUserId(e.target.value)}
+          required
+        />
+        <input
+          type="text"
+          placeholder="กรุณากรอกอายุ"
+          value={age}
+          onChange={(e) => setAge(e.target.value)}
+          required
+        />
+        <input
+          type="text"
+          placeholder="กรุณากรอกเพศ"
+          value={gender}
+          onChange={(e) => setGender(e.target.value)}
           required
         />
         <button type="submit">บันทึกข้อมูล</button>
@@ -85,12 +106,6 @@ function GameHome() {
         <Link to="/game2" className="card_game">
           ColorAndText Memory Test
         </Link>
-        {/* <Link to="/form1" className="card_game">
-          form Image Memory Test
-        </Link>
-        <Link to="/form2" className="card_game">
-          form ColorAndText Memory Test
-        </Link> */}
         <Link to="/exportdata" className="card_game">
           ExportData
         </Link>

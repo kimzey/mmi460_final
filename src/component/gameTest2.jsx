@@ -3,6 +3,8 @@ import Swal from "sweetalert2"; // Import SweetAlert2
 import './gameTest2.css';
 import { UserGameContext } from '../dataUser';
 import { useNavigate } from "react-router-dom";
+import GameInstructionScreen from './instart';
+
 
 const allColors = [
   { text: "สีฟ้า", color: "#00A1E4" },
@@ -23,6 +25,7 @@ const shuffleArray = (array) => {
 
 const MemoryTestGame = () => {
   const navigate = useNavigate(); // เรียกใช้ useNavigate
+  const [showInstructions, setShowInstructions] = useState(true);
 
   const { userData, updateGameData } = useContext(UserGameContext);
 
@@ -52,6 +55,7 @@ const MemoryTestGame = () => {
     setDisplayColors(shuffledDisplay);
     setAnswerOptions(shuffleArray([...display, ...decoy]));
   };
+  
 
   // ตั้งค่าเริ่มต้นสำหรับแต่ละรอบ
   useEffect(() => {
@@ -158,6 +162,16 @@ const MemoryTestGame = () => {
     setRoundResults([]);
     setShowTimeWarning(false);
   };
+
+  const handleStartGame = () => {
+    setShowInstructions(false);
+  };
+
+  if (showInstructions) {
+    return <GameInstructionScreen gameNumber={2} onStart={handleStartGame} />;
+  }
+
+
 
   return (
     <div className="container">

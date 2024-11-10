@@ -1,32 +1,32 @@
-import  { useContext } from 'react';
-import { UserGameContext } from '../dataUser';
-import Swal from 'sweetalert2';
-import './exportData.css';
+import { useContext } from "react";
+import { UserGameContext } from "../dataUser";
+import Swal from "sweetalert2";
+import "./exportData.css";
 
 const ExportData = () => {
   const { userData } = useContext(UserGameContext);
 
   // Format Game 1 data for display and export
   const formatGame1Data = (game1) => {
-    if (!game1 || typeof game1 !== 'object') return [];
-    return Object.values(game1).map(round => ({
+    if (!game1 || typeof game1 !== "object") return [];
+    return Object.values(game1).map((round) => ({
       round: round.round,
       selectedImage: round.selectedImage,
       correctImage: round.correctImage,
       timeSpent: parseFloat(round.timeSpent).toFixed(2),
-      result: round.result === 'ถูกต้อง' ? 'correct' : 'incorrect'
+      result: round.result === "ถูกต้อง" ? "correct" : "incorrect",
     }));
   };
 
   // Format Game 2 data for display and export
   const formatGame2Data = (game2) => {
-    if (!game2 || typeof game2 !== 'object') return [];
-    return Object.values(game2).map(round => ({
+    if (!game2 || typeof game2 !== "object") return [];
+    return Object.values(game2).map((round) => ({
       round: round.round,
       score: round.score,
       incorrectSelections: round.incorrectSelections,
       timeTaken: round.timeTaken.toFixed(3),
-      totalPossibleScore: round.totalPossibleScore
+      totalPossibleScore: round.totalPossibleScore,
     }));
   };
 
@@ -38,57 +38,62 @@ const ExportData = () => {
     const formGame2 = userData.formGame2 || {};
 
     // Create CSV header rows
-    let csvContent = 'User Information\n';
-    csvContent += `Username,${userData.userName}\n`;
-    csvContent += `User ID,${userData.userId}\n\n`;
+    let csvContent = "User Information\n";
+    // csvContent += `Username,${userData.userName}\n`;
+    csvContent += `User ID,${userData.userId}\n`;
+    csvContent += `Age,${userData.age || ""}\n`;
+    csvContent += `Gender,${userData.gender || ""}\n\n`;
 
     // Game 1 Data
-    csvContent += 'Game 1 Results\n';
-    csvContent += 'Round,Selected Image,Correct Image,Time Spent (s),Result\n';
-    game1Data.forEach(round => {
+    csvContent += "Game 1 Results\n";
+    csvContent += "Round,Selected Image,Correct Image,Time Spent (s),Result\n";
+    game1Data.forEach((round) => {
       csvContent += `${round.round},${round.selectedImage},${round.correctImage},${round.timeSpent},${round.result}\n`;
     });
-    csvContent += '\n';
+    csvContent += "\n";
 
     // Game 2 Data
-    csvContent += 'Game 2 Results\n';
-    csvContent += 'Round,Score,Incorrect Selections,Time Taken (s),Total Possible Score\n';
-    game2Data.forEach(round => {
+    csvContent += "Game 2 Results\n";
+    csvContent +=
+      "Round,Score,Incorrect Selections,Time Taken (s),Total Possible Score\n";
+    game2Data.forEach((round) => {
       csvContent += `${round.round},${round.score},${round.incorrectSelections},${round.timeTaken},${round.totalPossibleScore}\n`;
     });
-    csvContent += '\n';
+    csvContent += "\n";
 
     // Form Data
-    csvContent += 'Game 1 Form Responses\n';
+    csvContent += "Game 1 Form Responses\n";
     csvContent += Object.entries(formGame1)
       .map(([key, value]) => `${key},${value}`)
-      .join('\n');
-    csvContent += '\n\nGame 2 Form Responses\n';
+      .join("\n");
+    csvContent += "\n\nGame 2 Form Responses\n";
     csvContent += Object.entries(formGame2)
       .map(([key, value]) => `${key},${value}`)
-      .join('\n');
+      .join("\n");
 
     return csvContent;
   };
 
   const downloadCSV = () => {
     Swal.fire({
-      title: 'ยืนยันการส่งออกข้อมูล',
-      text: 'ต้องการดาวน์โหลดข้อมูลเป็นไฟล์ CSV หรือไม่?',
-      icon: 'question',
+      title: "ยืนยันการส่งออกข้อมูล",
+      text: "ต้องการดาวน์โหลดข้อมูลเป็นไฟล์ CSV หรือไม่?",
+      icon: "question",
       showCancelButton: true,
-      confirmButtonText: 'ดาวน์โหลด',
-      cancelButtonText: 'ยกเลิก',
+      confirmButtonText: "ดาวน์โหลด",
+      cancelButtonText: "ยกเลิก",
     }).then((result) => {
       if (result.isConfirmed) {
         const csvData = generateCSV();
-        const blob = new Blob(['\ufeff' + csvData], { type: 'text/csv;charset=utf-8;' });
-        const link = document.createElement('a');
-        const fileName = `${userData.userName}_${userData.userId}_data.csv`;
+        const blob = new Blob(["\ufeff" + csvData], {
+          type: "text/csv;charset=utf-8;",
+        });
+        const link = document.createElement("a");
+        const fileName = `${userData.gender}_${userData.userId}_data.csv`;
         link.href = URL.createObjectURL(blob);
         link.download = fileName;
         link.click();
-        Swal.fire('สำเร็จ!', 'ดาวน์โหลดข้อมูลเรียบร้อยแล้ว', 'success');
+        Swal.fire("สำเร็จ!", "ดาวน์โหลดข้อมูลเรียบร้อยแล้ว", "success");
       }
     });
   };
@@ -96,18 +101,26 @@ const ExportData = () => {
   return (
     <div className="export-container">
       <h2 className="export-title">ข้อมูลผลการทดสอบ</h2>
-      
+
       {/* User Information */}
       <div className="export-section">
         <h3 className="export-section__title">ข้อมูลผู้ใช้</h3>
         <div className="user-info">
-          <div className="user-info__item">
+          {/* <div className="user-info__item">
             <span className="user-info__label">ชื่อผู้ใช้:</span>
             {userData.userName}
-          </div>
+          </div> */}
           <div className="user-info__item">
             <span className="user-info__label">รหัสผู้ใช้:</span>
             {userData.userId}
+          </div>
+          <div className="user-info__item">
+            <span className="user-info__label">อายุ:</span>
+            {userData.age}
+          </div>
+          <div className="user-info__item">
+            <span className="user-info__label">เพศ:</span>
+            {userData.gender}
           </div>
         </div>
       </div>
@@ -134,8 +147,10 @@ const ExportData = () => {
                   <td>{round.correctImage}</td>
                   <td>{round.timeSpent}</td>
                   <td>
-                    <span className={`result-badge result-badge--${round.result}`}>
-                      {round.result === 'correct' ? 'ถูกต้อง' : 'ไม่ถูกต้อง'}
+                    <span
+                      className={`result-badge result-badge--${round.result}`}
+                    >
+                      {round.result === "correct" ? "ถูกต้อง" : "ไม่ถูกต้อง"}
                     </span>
                   </td>
                 </tr>
@@ -178,27 +193,26 @@ const ExportData = () => {
       <div className="form-responses">
         <div className="form-response">
           <h3 className="export-section__title">แบบสอบถาม Game 1</h3>
-          {userData.formGame1 && Object.entries(userData.formGame1).map(([key, value]) => (
-            <div key={key} className="form-response__item">
-              <span className="form-response__label">{key}:</span> {value}
-            </div>
-          ))}
+          {userData.formGame1 &&
+            Object.entries(userData.formGame1).map(([key, value]) => (
+              <div key={key} className="form-response__item">
+                <span className="form-response__label">{key}:</span> {value}
+              </div>
+            ))}
         </div>
         <div className="form-response">
           <h3 className="export-section__title">แบบสอบถาม Game 2</h3>
-          {userData.formGame2 && Object.entries(userData.formGame2).map(([key, value]) => (
-            <div key={key} className="form-response__item">
-              <span className="form-response__label">{key}:</span> {value}
-            </div>
-          ))}
+          {userData.formGame2 &&
+            Object.entries(userData.formGame2).map(([key, value]) => (
+              <div key={key} className="form-response__item">
+                <span className="form-response__label">{key}:</span> {value}
+              </div>
+            ))}
         </div>
       </div>
 
       {/* Export Button */}
-      <button
-        onClick={downloadCSV}
-        className="export-button"
-      >
+      <button onClick={downloadCSV} className="export-button">
         ดาวน์โหลดข้อมูล CSV
       </button>
     </div>

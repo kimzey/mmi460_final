@@ -6,8 +6,10 @@ const UserGameContext = createContext();
 const UserGameProvider = ({ children }) => {
   // ข้อมูลผู้ใช้และเกม
   const [userData, setUserData] = useState({
-    userName: '',
+    // userName: '',
     userId: '',
+    gender: '',
+    age:'',
     game1: [],
     // {
     //   round: 0,
@@ -30,11 +32,12 @@ const UserGameProvider = ({ children }) => {
   };
 
   // ฟังก์ชันอัปเดตข้อมูลผู้ใช้ (userName และ userId)
-  const updateUserInfo = (userName, userId) => {
+  const updateUserInfo = (userId,gender, age) => {
     setUserData((prevData) => ({
       ...prevData,
-      userName,
       userId,
+      gender,
+      age,
     }));
   };
 

@@ -15,12 +15,12 @@ const NavBar = () => {
                 <li>
                     <Link to="/game2">Game2 </Link>
                 </li>
-                <li>
+                {/* <li>
                     <Link to="/form1">form2 </Link>
                 </li>
                 <li>
                     <Link to="/form2">form2 </Link>
-                </li>
+                </li> */}
                 {/* เพิ่มลิงก์สำหรับหน้าที่คุณต้องการ */}
             </ul>
         </nav>
