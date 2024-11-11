@@ -113,6 +113,11 @@ function GameTest1() {
     }
   }, [showFirstImages, loading]);
 
+  useEffect(()=>{
+    updateGameData("game1",ExportData)
+    
+  },[ExportData])
+
   const shuffle = (array) => {
     const newArray = [...array];
     for (let i = newArray.length - 1; i > 0; i--) {
